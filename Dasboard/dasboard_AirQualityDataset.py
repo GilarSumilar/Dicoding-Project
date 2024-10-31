@@ -25,6 +25,13 @@ st.title("Air Quality Analysis :pencil:")
 st.markdown(
     """
     ## **Dashboard**
+    #### **Pertanyaan:**
+    - Apakah ada korelasi antara berbagai polutan udara (PM10 & SO2, TEMP & 03, RAIN & CO)?
+    - Bagaimana konsentrasi polutan udara di berbagai lokasi stasiun?
+    - Apakah ada tren atau pola yang terlihat pada tingkat polutan sepanjang tahun?
+    - Pada stasiun mana suhu mencapai derajat terendah dan tertingginya?
+    - Pada stasiun mana curah hujan mencapai volume tertingginya? 
+    
     """
     )
 
@@ -92,7 +99,26 @@ elif tabs == 'Analytics':
                 """
             )
         with st.expander('Contoh 3 kasus:'):
-            st.image('Korelasi.png')
+
+            pairs = [('PM10', 'SO2'), ('TEMP', 'O3'), ('RAIN', 'CO')]
+
+            fig, axs = plt.subplots(1, len(pairs), figsize=(12, 4))
+
+            for i, pair in enumerate(pairs):
+                x, y = pair
+                axs[i].scatter(air_quality[x], air_quality[y])
+                axs[i].set_xlabel(x)
+                axs[i].set_ylabel(y)
+                axs[i].set_title(f'Hubungan antara {x} & {y}')
+
+                # Menambahkan garis regresi
+                m, b = np.polyfit(air_quality[x], air_quality[y], 1)
+                axs[i].plot(air_quality[x], m*air_quality[x] + b, color='red')
+
+            plt.tight_layout()
+
+            st.pyplot(fig)
+
             st.markdown(
                 """
                 **Hubungan antara PM10 & SO2**
@@ -132,13 +158,85 @@ elif tabs == 'Analytics':
                 Semakin tinggi nilai total 'kadar_polusi, semakin tinggi pula tingkat polusi dari kota tersebut.
                 """
             )
+        # Viusalisasi peringkat kota dengan polutan tertinggi
         with st.expander('Show graph'):
-            st.image('Polutan.png')
 
+            polutan = air_quality.groupby(by="station").agg({
+                "PM10": ["mean"],
+                "SO2": ["mean"],
+                "NO2": ["mean"],
+                "CO": ["mean"],
+                "O3": ["mean"]
+            })
+
+            # Hitung rata-rata dari semua nilai polutan untuk setiap stasiun
+            polutan['total_kadar_polusi'] = polutan.mean(axis=1)
+
+            # Urutkan berdasarkan total_kadar_polusi secara descending
+            polutan = polutan.sort_values(by='total_kadar_polusi', ascending=False)
+
+            fig, ax = plt.subplots(figsize=(10, 5))
+            sns.barplot(x='total_kadar_polusi', y=polutan.index, data=polutan, palette='viridis', ax=ax)
+            ax.set_title('Peringkat kota dengan poluatan tertinggi')
+            ax.set_xlabel('')
+            ax.set_ylabel('Kota')
+
+            # Menambahkan label nilai pada setiap batang
+            for i, v in enumerate(polutan['total_kadar_polusi']):
+                ax.text(v + 0.02, i, str(round(v, 2)), color='black')
+
+            st.pyplot(fig)
+
+    # Visualisasi rataa-rata tahunan konsentrasi polutan 
     elif segment == 'Tren Musiman':
+
+        air_quality['datetime'] = pd.to_datetime(air_quality['datetime'])
+        
         pollutant_means_over_years = air_quality.groupby('datetime')[['SO2', 'NO2', 'O3']].mean()
-        st.image('tren.png')
-        st.image('tren1.png')
+        # Kelompokkan data berdasarkan tahun dan hitung rata-rata CO
+        air_quality['year'] = air_quality['datetime'].dt.year
+        rata_rata_tahunan = air_quality.groupby('year')[['CO']].mean()
+
+        # Membuat line plot
+        fig, ax = plt.subplots(figsize=(12, 6))
+
+        # Plot untuk CO
+        ax.plot(rata_rata_tahunan.index, rata_rata_tahunan['CO'], marker='o', label='CO')
+
+        # Memberikan judul dan label sumbu
+        ax.set_title('Rata-rata Tahunan Konsentrasi CO')
+        ax.set_xlabel('Tahun')
+        ax.set_ylabel('Konsentrasi')
+        ax.grid(True)
+
+        # Menampilkan plot pada Streamlit
+        st.pyplot(fig)
+
+
+        # Kelompokkan data berdasarkan tahun dan hitung rata-rata polutan
+        rata_rata_tahunan = air_quality.groupby(air_quality['datetime'].dt.year)[['PM10', 'SO2', 'NO2', 'O3']].mean()
+
+        # Membuat line plot
+        fig, ax = plt.subplots(figsize=(12, 6))
+
+        # Buat plot
+        ax.plot(rata_rata_tahunan.index, rata_rata_tahunan['PM10'], marker='o', label='PM10')
+        ax.plot(rata_rata_tahunan.index, rata_rata_tahunan['SO2'], marker='o', label='SO2')
+        ax.plot(rata_rata_tahunan.index, rata_rata_tahunan['NO2'], marker='o', label='NO2')
+        ax.plot(rata_rata_tahunan.index, rata_rata_tahunan['O3'], marker='o', label='O3')
+
+        # Memberikan judul dan label sumbu
+        ax.set_title('Rata-rata Tahunan Konsentrasi Polutan Udara')
+        ax.set_xlabel('Tahun')
+        ax.set_ylabel('Konsentrasi')
+
+        # Menambahkan legend dan grid
+        ax.legend()
+        ax.grid(True)
+
+        # Menampilkan plot pada Streamlit
+        st.pyplot(fig)
+
         with st.expander('Show explanation', expanded=True):
             st.markdown(
                 """
