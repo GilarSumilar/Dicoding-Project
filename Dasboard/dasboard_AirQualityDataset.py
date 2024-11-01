@@ -280,12 +280,59 @@ elif tabs == 'Conclusion':
         """
         ### **Conclusion :book:**
 
-        - Berdasarkan grafik ini, dapat disimpulkan bahwa kualitas udara di wilayah tersebut cenderung memburuk dari tahun ke tahun, terutama disebabkan oleh peningkatan konsentrasi partikel debu halus (PM10). 
-        Perlu dilakukan penelitian lebih lanjut untuk mengidentifikasi penyebab utama peningkatan PM10 dan mencari solusi untuk memperbaiki kualitas udara.
+        **Pertanyaan 1**
 
-        - Sebagian besar kota memiliki tingkat polusi yang relatif tinggi, dengan hanya beberapa kota yang memiliki tingkat polusi yang lebih rendah. Hal ini mengindikasikan bahwa polusi udara merupakan masalah yang cukup serius di wilayah tersebut.
-        - Meskipun tidak terlihat jelas dari grafik ini, kita dapat menduga adanya pola spasial dalam distribusi polusi udara. Misalnya, kota-kota yang berdekatan mungkin memiliki tingkat polusi yang serupa, atau kota-kota yang terletak di daerah industri mungkin memiliki tingkat polusi yang lebih tinggi.
+        **Hubungan antara PM10 & SO2**
+        - Tren Positif: Terlihat adanya tren positif yang lemah antara konsentrasi PM10 dan SO2. Artinya, ketika konsentrasi PM10 meningkat, cenderung diikuti oleh peningkatan konsentrasi SO2.
+
+        - Korelasi Moderat: Korelasi antara kedua polutan ini cenderung moderat, tidak terlalu kuat. Hal ini menunjukkan bahwa ada faktor lain yang juga mempengaruhi konsentrasi SO2 selain PM10.
+
+        - Sumber Polutan: Kedua polutan ini seringkali berasal dari sumber yang sama, seperti pembakaran bahan bakar fosil. Oleh karena itu, wajar jika terdapat hubungan positif di antara keduanya.
+
+        **Hubungan antara TEMP & 03**
+        - Tren Positif: Terdapat tren positif yang cukup jelas antara suhu (TEMP) dan konsentrasi ozon (O3). Artinya, semakin tinggi suhu, cenderung semakin tinggi pula konsentrasi ozon.
+
+        - Korelasi Moderat: Korelasi antara suhu dan ozon juga cenderung moderat. Faktor lain seperti intensitas sinar matahari dan keberadaan senyawa organik volatil (VOC) juga dapat mempengaruhi pembentukan ozon.
+
+        - Proses Pembentukan Ozon: Suhu yang tinggi dapat mempercepat reaksi kimia yang menghasilkan ozon di atmosfer.
+
+        **Hubungan antara RAIN & CO**
+        - Tren Negatif: Terlihat tren negatif yang cukup jelas antara curah hujan (RAIN) dan konsentrasi karbon monoksida (CO). Artinya, semakin tinggi curah hujan, cenderung semakin rendah konsentrasi CO.
+
+        - Korelasi Moderat: Korelasi antara curah hujan dan CO juga cenderung moderat.
+
+        - Pengenceran Polutan: Curah hujan dapat membantu mengencerkan konsentrasi polutan di udara, termasuk CO. Selain itu, curah hujan juga dapat mempengaruhi aktivitas manusia yang menghasilkan CO, seperti penggunaan kendaraan bermotor.
         
+        **Pertanyaan 2** 
+
+        Berdasarkan tabel kadar polutan :
+
+        - Rata-rata kadar PM10 tertinggi terdapat pada kota Gucheng
+        - Rata-rata kadar SO2 tertinggi terdapat pada kota Nongzhanguan
+        - Rata-rata kadar NO2 tertinggi terdapat pada kota Wanliu
+        - Rata-rata kadar CO tertinggi terdapat pada kota Wanshouxigong
+        - Rata-rata kadar O3 tertinggi terdapat pada kota Huair
+
+        Kolom total kadar_polusi adalah sebuah metrik yang dihitung dengan mengambil rata-rata dari keempat polutan. Ini memberikan kita sebuah angka tunggal yang dapat digunakan untuk membandingkan tingkat polusi antar kota. 
+        Semakin tinggi nilai total 'kadar_polusi, semakin tinggi pula tingkat polusi dari kota tersebut.
+
+        **Pertanyaan 3**
+
+        - Berdasarkan grafik pada tabel tren musiman, dapat disimpulkan bahwa kualitas udara di wilayah tersebut cenderung memburuk dari tahun ke   tahun, terutama disebabkan oleh peningkatan konsentrasi partikel debu halus (PM10).
+        Perlu dilakukan penelitian lebih lanjut untuk mengidentifikasi penyebab utama peningkatan PM10 dan mencari solusi untuk memperbaiki kualitas udara.
+        
+        **Pertanyaan 4** 
+
+        - Bisa kita lihat pada Temperatur & curah hujan di berbagai kota / tabel temperatur pada dashboard, 
+        temperature maximum 41.6°C pada kota Gucheng. Sedangkan minimum nya -15.6°C pada kota yang sama yaitu Gucheng.
+
+        **Pertanyaan 5**
+
+        Curah hujan tertinggi berada di kota Aotizhongxin dengan maximum volume 72.5mm.
+
+        - **Curah Hujan**: Meskipun nilai minimum curah hujan semuanya 0, nilai maksimum memberikan informasi tentang potensi curah hujan tertinggi yang pernah terjadi di setiap kota. Berdasarkan histogram yang di tampilkan di atas yaitu distribusi persebaran RAIN, data curah hujan (RAIN) memiliki distribusi yang sangat miring ke kanan. 
+        Ini mengindikasikan bahwa sebagian besar data bernilai 0 atau mendekati 0, dengan sedikit sekali kejadian curah hujan yang tinggi. Kondisi ini cukup umum pada data curah hujan, terutama di daerah dengan iklim kering.
+        - **Perbandingan kota**: Kita dapat membandingkan suhu dan curah hujan antara berbagai kota untuk melihat perbedaan iklim di masing-masing lokasi. Misalnya, kita dapat melihat kota mana yang memiliki suhu tertinggi atau curah hujan terbanyak. 
         """
     )
 
